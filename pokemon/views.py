@@ -7,28 +7,28 @@ from django.http import HttpResponse, JsonResponse
 # ENDPOINT: /pokemon/list
 def pokemon_list(request):
     pokemon_queryset = Pokemon.objects.all()
-    # Trasformiamo i dati in una lista di dizionari per il JSON
+    # Transform data into a list of dictionaries for JSON
     data = list(pokemon_queryset.values("id", "name", "pokedex_id"))
     return JsonResponse(data, safe=False)
 
 # ENDPOINT: /pokemon/delete/<id>/
 def delete_pokemon(request, pk):
-    # Cerchiamo il pokemon con quell'ID, se non esiste manda un errore 404
-    pokemon_da_cancellare = get_object_or_404(Pokemon, pk=pk)
+    # Search for the pokemon with that ID, return 404 if it doesn't exist
+    pokemon_to_delete = get_object_or_404(Pokemon, pk=pk)
     
-    nome_eliminato = pokemon_da_cancellare.name
-    pokemon_da_cancellare.delete() # Ciao ciao Pokemon!
+    deleted_name = pokemon_to_delete.name
+    pokemon_to_delete.delete() # Bye bye Pokemon!
     
-    return JsonResponse({"message": f"Il Pokemon {nome_eliminato} è stato liberato nel bosco!"})
+    return JsonResponse({"message": f"Pokemon {deleted_name} was released into the wild!"})
 
 def pokemon_list(request):
-    # 1. Recupera tutti i pokemon dal DB (QuerySet)
-    tutti_i_pokemon = Pokemon.objects.all()
+    # 1. Retrieve all pokemon from DB (QuerySet)
+    all_pokemon = Pokemon.objects.all()
     
-    # 2. Crea una lista leggibile (per ora semplice testo)
-    nomi = [p.name for p in tutti_i_pokemon]
+    # 2. Create a readable list (simple text for now)
+    names = [p.name for p in all_pokemon]
     
-    return HttpResponse(f"I tuoi Pokémon: {', '.join(nomi)}")
+    return HttpResponse(f"Your Pokemon: {', '.join(names)}")
 
 def add_pokemon(request):
     pokemon = Pokemon.objects.create(name="Bulbasaur", pokedex_id=1)
