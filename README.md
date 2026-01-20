@@ -44,7 +44,19 @@ A simple Django application to manage a Pokedex.
     python manage.py runserver
     ```
 
-2.  Open your browser or use a tool like Postman/curl to interact with the API:
+2.  Open your browser or use a tool like **Postman** or **curl** to interact with the API:
     -   `GET /pokemon/list/`: Get the list of Pokemon.
     -   `GET /pokemon/add/`: Add a new Pokemon.
     -   `GET /pokemon/delete/<uuid>/`: Delete a Pokemon by its UUID.
+
+## Recommended Tools
+
+### Postman
+Use Postman to test the API endpoints. You can create a new collection for "Pokedex" and add requests for the endpoints listed above.
+
+### DBeaver
+Use DBeaver to inspect the SQLite database:
+1.  Open DBeaver.
+2.  Create a new connection and select **SQLite**.
+3.  Browse to the `db.sqlite3` file in the project directory.
+4.  You can now view and edit the `pokemon_pokemon` table directly.
