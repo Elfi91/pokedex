@@ -1,5 +1,9 @@
 # Pokedex
 
+> [!IMPORTANT]
+> 🚧 **Work In Progress** 🚧
+> This project is currently under active development.
+
 A simple Django application to manage a Pokedex.
 
 ## Features
