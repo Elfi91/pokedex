@@ -4,14 +4,16 @@
 > 🚧 **Work In Progress** 🚧
 > This project is currently under active development.
 
+
 A simple Django application to manage a Pokedex.
 
 ## Features
 
-- **List Pokemon**: View a list of all your Pokemon.
-- **Add Pokemon**: Add new Pokemon to your collection (currently hardcoded to Bulbasaur for testing).
+- **Web Interface**: View your Pokemon collection in a user-friendly web page.
+- **List Pokemon**: Retrieve a list of all your Pokemon via API.
+- **Add Pokemon**: Add new Pokemon to your collection using JSON data.
+- **Update Pokemon**: Update existing Pokemon details.
 - **Delete Pokemon**: Release a Pokemon into the wild.
-- **English Interface**: All API responses and comments are in English.
 
 ## Installation
 
@@ -44,9 +46,14 @@ A simple Django application to manage a Pokedex.
     python manage.py runserver
     ```
 
-2.  Open your browser or use a tool like **Postman** or **curl** to interact with the API:
-    -   `GET /pokemon/list/`: Get the list of Pokemon.
-    -   `GET /pokemon/add/`: Add a new Pokemon.
+2.  **Web Interface**:
+    -   Open your browser and visit: `http://127.0.0.1:8000/pokemon/web-list/`
+
+3.  **API Endpoints**:
+    Use a tool like **Postman** or **curl** to interact with the API:
+    -   `GET /pokemon/list/`: Get the list of all Pokemon.
+    -   `POST /pokemon/add/`: Add a new Pokemon. Requires a JSON body with fields like `name`, `pokedex_id`, `type_1`, etc.
+    -   `POST /pokemon/update/<uuid>/`: Update a Pokemon's details. Requires a JSON body.
     -   `GET /pokemon/delete/<uuid>/`: Delete a Pokemon by its UUID.
 
 ## Recommended Tools
