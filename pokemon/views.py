@@ -100,3 +100,7 @@ def delete_pokemon(request, pk):
     pokemon_to_delete.delete() # Bye bye Pokemon!
     
     return JsonResponse({"message": f"Pokemon {deleted_name} was released into the wild!"})
+
+def pokemon_web_list(request):
+    pokemon_list = Pokemon.objects.all().order_by('pokedex_id')
+    return render(request, 'pokemon/pokemon_list.html', {'pokemon_list': pokemon_list})

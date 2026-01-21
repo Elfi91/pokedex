@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Mio Pokédex</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; padding: 40px; text-align: center; }
+        .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; }
+
+        .card { 
+            background: white; border-radius: 15px; padding: 25px; width: 220px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 8px solid #ccc;
+            position: relative;
+        }
+
+        .pokedex-id { 
+            position: absolute; top: 10px; right: 15px; 
+            font-size: 0.75em; color: #bbb; font-weight: bold; 
+        }
+
+        /* Nickname piccolo e discreto */
+        .nickname { color: #888; font-style: italic; font-size: 0.9em; margin-bottom: 5px; display: block; }
+
+        /* Icona Genere rimpicciolita */
+        .gender-icon { 
+            font-size: 0.9em; /* Più piccolo rispetto al nome */
+            vertical-align: middle; 
+            margin-left: 4px;
+            opacity: 0.8;
+        }
+
+        /* Colori Dinamici */
+        .card.Electric { border-top-color: #f7d02c; }
+        .card.Fire { border-top-color: #ee8130; }
+        .card.Grass { border-top-color: #7ac74c; }
+        .card.Normal { border-top-color: #a8a77a; }
+        .card.Water { border-top-color: #6390f0; }
+
+        .type-tag { 
+            display: inline-block; padding: 4px 10px; border-radius: 20px; 
+            font-size: 0.75em; font-weight: bold; margin: 5px 2px;
+        }
+        .type-Electric { background-color: #f7d02c; color: #333; }
+        .type-Fire { background-color: #ee8130; color: #fff; }
+        .type-Grass { background-color: #7ac74c; color: #fff; }
+        .type-Normal { background-color: #a8a77a; color: #fff; }
+        .type-Poison { background-color: #a33ea1; color: #fff; }
+        .type-Flying { background-color: #a98ff3; color: #fff; }
+        .type-Fairy { background-color: #d685ad; color: #fff; }
+
+        .male { color: #007bff; }
+        .female { color: #e83e8c; }
+        .unknown { color: #6c757d; }
+    </style>
+</head>
+<body>
+    <h1>Pokédex di Elisabetta</h1>
+    
+    <div class="grid">
+        {% for pokemon in pokemon_list %}
+        <div class="card {{ pokemon.type_1 }}">
+            <span class="pokedex-id">#{{ pokemon.pokedex_id }}</span>
+            
+            <h2>{{ pokemon.name }}{% if pokemon.gender == 'M' %}<span class="gender-icon male">♂</span>{% elif pokemon.gender == 'F' %}<span class="gender-icon female">♀</span>{% else %}<span class="gender-icon unknown">?</span>{% endif %}</h2>
+
+            {% if pokemon.nickname %}
+                <span class="nickname">"{{ pokemon.nickname }}"</span>
+            {% endif %}
+
+            <p><strong>Livello:</strong> {{ pokemon.level }}</p>
+            
+            <div>
+                <span class="type-tag type-{{ pokemon.type_1 }}">{{ pokemon.type_1 }}</span>
+                {% if pokemon.type_2 %}
+                <span class="type-tag type-{{ pokemon.type_2 }}">{{ pokemon.type_2 }}</span>
+                {% endif %}
+            </div>
+
+            <p><i>{{ pokemon.ability }}</i></p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
