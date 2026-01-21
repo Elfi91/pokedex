@@ -18,14 +18,21 @@ def add_pokemon(request):
         # Crea il nuovo record nel database usando i dati ricevuti
         pokemon = Pokemon.objects.create(
             name=data['name'],
-            pokedex_id=data['pokedex_id']
+            pokedex_id=data['pokedex_id'],
+            level=data.get('level', 1), # Se non viene passata questa info, usa 1
+            type_1=data['type_1'],
+            type_2=data.get('type_2'), # .get() lo rende opzionale
+            ability=data.get('ability', ''),
+            nickname=data.get('nickname'),
+            gender=data.get('gender', 'U')
         )
 
         # Restituisce i dati del Pokémon appena creato con status 201 (Created)
         return JsonResponse({
             'id': pokemon.id,
             'name': pokemon.name,
-            'pokedex_id': pokemon.pokedex_id
+            'pokedex_id': pokemon.pokedex_id,
+            'message': 'Pokemon aggiunto con successo!'
         }, status=201)
 
     except json.JSONDecodeError:
@@ -48,6 +55,26 @@ def add_pokemon(request):
 
     except Exception as e:
         return JsonResponse({'error': 'Errore interno del server'}, status=500)
+
+@csrf_exempt
+@require_POST
+def update_pokemon(request, pk):
+    try:
+        data = json.loads(request.body)
+        pokemon = get_object_or_404(Pokemon, pk=pk)
+        
+        # Aggiorniamo solo i campi che ci interessano
+        pokemon.type_1 = data.get('type_1', pokemon.type_1)
+        pokemon.level = data.get('level', pokemon.level)
+        pokemon.nickname = data.get('nickname', pokemon.nickname)
+        pokemon.gender = data.get('gender', pokemon.gender)
+        pokemon.ability = data.get('ability', pokemon.ability)
+            
+        pokemon.save()
+        return JsonResponse({'message': f'{pokemon.name} aggiornato!'})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+    
 
 @require_GET
 def get_pokemon_list(request):
